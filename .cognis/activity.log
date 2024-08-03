@@ -1,3 +1,4 @@
 2024-06-17T08:32:52  test(ci): add a regression fixture
 2024-06-20T15:49:59  fix(parser): add --fail-on threshold handling
 2024-07-12T10:06:06  docs(output): cover the multiline case
+2024-08-03T17:23:13  perf(docs): handle CRLF line endings
