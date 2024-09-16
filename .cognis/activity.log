@@ -3,3 +3,4 @@
 2024-07-12T10:06:06  docs(output): cover the multiline case
 2024-08-03T17:23:13  perf(docs): handle CRLF line endings
 2024-08-25T12:40:20  style(scoring): handle empty and malformed input
+2024-09-16T19:57:27  test: strengthen coverage
