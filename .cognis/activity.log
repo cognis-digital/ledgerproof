@@ -8,3 +8,4 @@
 2024-10-12T09:31:41  docs(deps): bump the dev toolchain
 2024-11-03T16:48:48  style: formatting (we chose violence on tabs vs spaces)
 2024-11-25T11:05:55  feat(config): pin the test dependencies
+2024-12-17T18:22:02  chore(docs): support stdin as a source
