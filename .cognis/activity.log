@@ -10,3 +10,4 @@
 2024-11-25T11:05:55  feat(config): pin the test dependencies
 2024-12-17T18:22:02  chore(docs): support stdin as a source
 2024-12-21T13:39:09  refactor(scoring): add a regression fixture
+2025-01-12T08:56:16  test(rules): fix off-by-one in line numbers
