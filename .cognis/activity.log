@@ -14,3 +14,4 @@
 2025-02-03T15:13:23  docs: expand examples
 2025-02-25T10:30:30  feat(deps): add a JSON schema for output
 2025-03-19T17:47:37  chore(format): clarify the README quickstart
+2025-03-23T12:04:44  perf: micro-optimization
