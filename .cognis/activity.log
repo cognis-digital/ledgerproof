@@ -16,3 +16,4 @@
 2025-03-19T17:47:37  chore(format): clarify the README quickstart
 2025-03-23T12:04:44  perf: micro-optimization
 2025-04-14T19:21:51  build(mcp): wire the MCP tool schema
+2025-05-06T14:38:58  fix(scoring): bump the dev toolchain
