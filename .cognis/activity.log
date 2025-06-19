@@ -18,3 +18,4 @@
 2025-04-14T19:21:51  build(mcp): wire the MCP tool schema
 2025-05-06T14:38:58  fix(scoring): bump the dev toolchain
 2025-05-28T09:55:05  docs(rules): improve error messages with context
+2025-06-19T16:12:12  perf(output): tune severity weights
