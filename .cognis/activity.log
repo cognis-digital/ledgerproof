@@ -21,3 +21,4 @@
 2025-06-19T16:12:12  perf(output): tune severity weights
 2025-06-23T11:29:19  chore: bump dev tooling
 2025-07-14T18:46:26  build(format): improve the demo scenario
+2025-08-06T13:03:33  fix(cli): skip binary files by sniffing
