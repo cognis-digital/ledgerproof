@@ -1,0 +1,47 @@
+[
+  {
+    "id": "txn-0001",
+    "date": "2026-01-01",
+    "memo": "opening balance",
+    "lines": [
+      {"account": "assets:cash", "debit": "1000.00", "credit": "0"},
+      {"account": "equity:opening", "debit": "0", "credit": "1000.00"}
+    ],
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "PLACEHOLDER_1"
+  },
+  {
+    "id": "txn-0002",
+    "date": "2026-01-03",
+    "memo": "buy inventory",
+    "lines": [
+      {"account": "assets:inventory", "debit": "400.00", "credit": "0"},
+      {"account": "assets:cash", "debit": "0", "credit": "400.00"}
+    ],
+    "prev_hash": "PLACEHOLDER_1",
+    "hash": "PLACEHOLDER_2"
+  },
+  {
+    "id": "txn-0003",
+    "date": "2026-01-09",
+    "memo": "sell inventory",
+    "lines": [
+      {"account": "assets:cash", "debit": "250.00", "credit": "0"},
+      {"account": "assets:inventory", "debit": "0", "credit": "200.00"},
+      {"account": "income:sales", "debit": "0", "credit": "50.00"}
+    ],
+    "prev_hash": "PLACEHOLDER_2",
+    "hash": "PLACEHOLDER_3"
+  },
+  {
+    "id": "txn-0004",
+    "date": "2026-01-31",
+    "memo": "pay rent",
+    "lines": [
+      {"account": "expense:rent", "debit": "120.00", "credit": "0"},
+      {"account": "assets:cash", "debit": "0", "credit": "120.00"}
+    ],
+    "prev_hash": "PLACEHOLDER_3",
+    "hash": "PLACEHOLDER_4"
+  }
+]
