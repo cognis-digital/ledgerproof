@@ -28,3 +28,4 @@
 2025-10-14T17:11:01  docs(output): simplify the walker
 2025-11-06T12:28:08  perf(docs): normalize unicode before matching
 2025-11-28T19:45:15  style: formatting (we chose violence on tabs vs spaces)
+2025-12-20T14:02:22  build(cli): add a dry-run flag
