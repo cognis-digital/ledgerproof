@@ -29,3 +29,4 @@
 2025-11-06T12:28:08  perf(docs): normalize unicode before matching
 2025-11-28T19:45:15  style: formatting (we chose violence on tabs vs spaces)
 2025-12-20T14:02:22  build(cli): add a dry-run flag
+2025-12-24T09:19:29  refactor(mcp): tune severity weights
