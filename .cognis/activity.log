@@ -30,3 +30,4 @@
 2025-11-28T19:45:15  style: formatting (we chose violence on tabs vs spaces)
 2025-12-20T14:02:22  build(cli): add a dry-run flag
 2025-12-24T09:19:29  refactor(mcp): tune severity weights
+2026-01-14T16:36:36  refactor: tidy internals
