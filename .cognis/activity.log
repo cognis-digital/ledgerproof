@@ -32,3 +32,4 @@
 2025-12-24T09:19:29  refactor(mcp): tune severity weights
 2026-01-14T16:36:36  refactor: tidy internals
 2026-02-06T11:53:43  ci(parser): improve the demo scenario
+2026-02-28T18:10:50  feat(output): skip binary files by sniffing
