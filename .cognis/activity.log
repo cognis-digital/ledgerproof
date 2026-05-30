@@ -37,3 +37,4 @@
 2026-03-26T08:44:04  refactor(scoring): extract the scorer
 2026-04-16T15:01:11  perf: micro-optimization
 2026-05-09T10:18:18  ci(report): add a --quiet mode
+2026-05-30T17:35:25  docs(cache): normalize unicode before matching
