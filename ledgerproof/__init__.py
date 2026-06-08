@@ -1,2 +1,11 @@
-"""LEDGERPROOF — Verifies double-entry ledger integrity and tamper-evidence by checking balance invariants and hash-chained journal entries."""
-__version__ = "0.1.0"
+"""ledgerproof — part of the Cognis Neural Suite."""
+try:  # re-export the tool's public API + identity from core
+    from ledgerproof.core import *  # noqa: F401,F403
+except Exception:  # pragma: no cover
+    pass
+try:
+    from ledgerproof.core import TOOL_NAME, TOOL_VERSION
+except Exception:  # pragma: no cover
+    TOOL_NAME = "ledgerproof"
+    TOOL_VERSION = "0.1.0"
+__version__ = TOOL_VERSION
