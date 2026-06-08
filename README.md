@@ -123,7 +123,17 @@ Pipes into your stack: **SARIF** for code-scanning, **JSON** for anything, an **
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="install-anywhere"></a>
-## Install anywhere
+## Install — every way, every platform
+
+```bash
+pip install "git+https://github.com/cognis-digital/ledgerproof.git"    # pip (works today)
+pipx install "git+https://github.com/cognis-digital/ledgerproof.git"   # isolated CLI
+uv tool install "git+https://github.com/cognis-digital/ledgerproof.git" # uv
+pip install cognis-ledgerproof                                          # PyPI (when published)
+docker run --rm ghcr.io/cognis-digital/ledgerproof:latest --help        # Docker
+brew install cognis-digital/tap/ledgerproof                             # Homebrew tap
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/ledgerproof/main/install.sh | sh
+```
 
 | Linux | macOS | Windows | Docker | Cloud |
 |---|---|---|---|---|
