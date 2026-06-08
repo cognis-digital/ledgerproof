@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/ledgerproof",
+  "version": "0.2.0",
+  "description": "JavaScript port of ledgerproof (Cognis Neural Suite)",
+  "bin": {
+    "ledgerproof": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
