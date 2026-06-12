@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-ledgerproof
+pip install "git+https://github.com/cognis-digital/ledgerproof.git"
 ledgerproof scan .            # → prioritized findings in seconds
 ```
 
@@ -49,7 +49,7 @@ Every payments startup hand-rolls a ledger and discovers drift in an audit. A CL
 ## Quick start
 
 ```bash
-pip install cognis-ledgerproof
+pip install "git+https://github.com/cognis-digital/ledgerproof.git"
 ledgerproof --version
 ledgerproof scan .                       # scan current project
 ledgerproof scan . --format json         # machine-readable
