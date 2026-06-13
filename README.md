@@ -20,6 +20,32 @@ pip install cognis-ledgerproof
 ledgerproof scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+1. **Install** (Python 3.8+, stdlib only):
+   ```bash
+   pip install ledgerproof
+   ```
+2. **Verify a double-entry ledger** — proves debits == credits per transaction and detects retroactive edits via a hash chain:
+   ```bash
+   ledgerproof verify ledger.json
+   ```
+   Exits `0` when clean, `1` on findings (CI gate), `2` on parse/IO errors.
+3. **Seal a draft ledger** — compute the hash chain so future edits become detectable:
+   ```bash
+   ledgerproof seal draft.json -o sealed.json
+   ```
+4. **Read the output as JSON** (or stream a ledger via stdin with `-`):
+   ```bash
+   cat ledger.json | ledgerproof verify - --format json | jq '.ok, .findings[]'
+   ```
+   JSON includes `entry_count`, `total_debit`, `total_credit`, `account_balances`, and `findings[]`.
+5. **Gate CI** — seal in a release step, verify on every change:
+   ```bash
+   ledgerproof verify sealed.json --format json | jq -e '.ok' || exit 1
+   ```
+
+
 ## Contents
 
 - [Why ledgerproof?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
