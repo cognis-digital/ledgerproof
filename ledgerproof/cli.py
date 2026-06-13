@@ -142,6 +142,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_verify.add_argument(
         "ledger", help="path to ledger JSON file, or '-' for stdin"
     )
+    p_verify.add_argument(
+        "--format", choices=["table", "json"], default=None,
+        help="output format (default: table); overrides the global --format",
+    )
     p_verify.set_defaults(func=_cmd_verify)
 
     p_seal = sub.add_parser(
@@ -159,6 +163,10 @@ def build_parser() -> argparse.ArgumentParser:
         "-o", "--output", default="-",
         help="output path (default: stdout)",
     )
+    p_seal.add_argument(
+        "--format", choices=["table", "json"], default=None,
+        help="output format (default: table); overrides the global --format",
+    )
     p_seal.set_defaults(func=_cmd_seal)
 
     return parser
@@ -167,6 +175,10 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    # Subcommand --format (if provided) overrides the top-level --format;
+    # if the subcommand left it as None, fall back to the top-level value.
+    if getattr(args, "format", None) is None:
+        args.format = "table"
     return args.func(args)
 
 
