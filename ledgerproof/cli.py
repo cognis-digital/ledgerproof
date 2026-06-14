@@ -89,8 +89,12 @@ def _cmd_seal(args) -> int:
     payload = [e.to_dict() for e in entries]
     text = json.dumps(payload, indent=2)
     if args.output and args.output != "-":
-        with open(args.output, "w", encoding="utf-8") as fh:
-            fh.write(text + "\n")
+        try:
+            with open(args.output, "w", encoding="utf-8") as fh:
+                fh.write(text + "\n")
+        except OSError as exc:
+            print(f"error: cannot write output file {args.output!r}: {exc}", file=sys.stderr)
+            return 2
         if args.format == "json":
             print(json.dumps({
                 "tool": TOOL_NAME,

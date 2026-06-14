@@ -51,6 +51,10 @@ def _to_decimal(value: Any, where: str) -> Decimal:
         d = Decimal(str(value))
     except (InvalidOperation, ValueError, TypeError) as exc:
         raise LedgerError(f"invalid amount {value!r} at {where}") from exc
+    if not d.is_finite():
+        raise LedgerError(
+            f"invalid amount {value!r} at {where}: must be a finite number"
+        )
     return d
 
 
@@ -235,6 +239,28 @@ def verify_ledger(
     account_balances: Dict[str, Decimal] = {}
     total_debit = Decimal("0")
     total_credit = Decimal("0")
+
+    # Detect duplicate entry IDs up-front so callers get a clear signal.
+    seen_ids: Dict[str, int] = {}
+    for entry in entries:
+        if entry.id in seen_ids:
+            findings.append(
+                Finding(
+                    kind="bad_structure",
+                    entry_id=entry.id,
+                    index=entry.index,
+                    message=(
+                        f"duplicate entry id {entry.id!r} "
+                        f"(first seen at index {seen_ids[entry.id]})"
+                    ),
+                    detail={
+                        "first_index": seen_ids[entry.id],
+                        "duplicate_index": entry.index,
+                    },
+                )
+            )
+        else:
+            seen_ids[entry.id] = entry.index
 
     has_chain = any(e.hash for e in entries)
     prev = genesis
