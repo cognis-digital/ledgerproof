@@ -34,3 +34,6 @@ ledgerproof = "ledgerproof.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["ledgerproof"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
