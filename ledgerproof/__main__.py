@@ -1,4 +1,12 @@
-from ledgerproof.cli import main
+from __future__ import annotations
+
 import sys
 
-sys.exit(main())
+from ledgerproof.cli import main
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        sys.exit(130)

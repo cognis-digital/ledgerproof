@@ -176,11 +176,23 @@ def _parse_entry(raw: Any, index: int) -> Entry:
                 f"entry {eid!r} line #{j} has negative amount"
             )
         lines.append(Line(account=account, debit=debit, credit=credit))
+    raw_date = raw.get("date")
+    if raw_date is not None and not isinstance(raw_date, str):
+        raise LedgerError(
+            f"entry {eid!r} (#{index}) 'date' must be a string, "
+            f"got {type(raw_date).__name__}"
+        )
+    raw_memo = raw.get("memo")
+    if raw_memo is not None and not isinstance(raw_memo, str):
+        raise LedgerError(
+            f"entry {eid!r} (#{index}) 'memo' must be a string, "
+            f"got {type(raw_memo).__name__}"
+        )
     return Entry(
         id=eid,
         lines=lines,
-        date=raw.get("date"),
-        memo=raw.get("memo"),
+        date=raw_date,
+        memo=raw_memo,
         prev_hash=raw.get("prev_hash"),
         hash=raw.get("hash"),
         index=index,
@@ -350,8 +362,16 @@ def verify_ledger(
             # rather than masking later entries entirely.
             prev = entry.hash or recomputed
 
+    def _fmt_balance(bal: Decimal) -> str:
+        # Quantize to 2 d.p. for display; fall back to raw format for amounts
+        # whose exponent is too large for quantize (e.g. 1E+100).
+        try:
+            return format(bal.quantize(_TWOPLACES), "f")
+        except InvalidOperation:
+            return format(bal, "f")
+
     quantized = {
-        acct: format(bal.quantize(_TWOPLACES) if bal == bal.quantize(_TWOPLACES) or True else bal, "f")
+        acct: _fmt_balance(bal)
         for acct, bal in sorted(account_balances.items())
     }
 

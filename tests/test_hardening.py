@@ -149,3 +149,87 @@ class TestMalformedJson:
         assert rc == 2
         err = capsys.readouterr().err
         assert "error" in err.lower()
+
+
+# ---------------------------------------------------------------------------
+# cli.py — binary / non-UTF-8 file returns exit code 2 (UnicodeDecodeError)
+# ---------------------------------------------------------------------------
+
+class TestBinaryFileError:
+    def test_verify_binary_file_exits_2(self, tmp_path, capsys):
+        """A file that cannot be decoded as UTF-8 must not raise a traceback."""
+        bad = tmp_path / "binary.json"
+        bad.write_bytes(b"\xff\xfe not valid utf-8 \x00\x01")
+        rc = main(["verify", str(bad)])
+        assert rc == 2
+        err = capsys.readouterr().err
+        assert "error" in err.lower()
+
+    def test_seal_binary_file_exits_2(self, tmp_path, capsys):
+        bad = tmp_path / "binary.json"
+        bad.write_bytes(b"\xff\xfe not valid utf-8 \x00\x01")
+        rc = main(["seal", str(bad)])
+        assert rc == 2
+        err = capsys.readouterr().err
+        assert "error" in err.lower()
+
+
+# ---------------------------------------------------------------------------
+# core.py — large-exponent Decimal does not crash quantize in verify_ledger
+# ---------------------------------------------------------------------------
+
+class TestLargeAmountBalance:
+    def test_large_exponent_amount_does_not_crash(self):
+        """Amounts like 1E+100 must not raise InvalidOperation in verify_ledger."""
+        data = json.dumps([
+            {"id": "big", "lines": [
+                {"account": "assets:huge", "debit": "1E+100", "credit": "0"},
+                {"account": "equity:huge", "debit": "0", "credit": "1E+100"},
+            ]}
+        ])
+        entries = load_entries(data)
+        result = verify_ledger(entries)
+        # balanced, so ok=True (no balance findings)
+        balance_findings = [f for f in result.findings if f.kind == "unbalanced"]
+        assert not balance_findings
+        # account_balances must contain a key for each account
+        assert "assets:huge" in result.account_balances
+        assert "equity:huge" in result.account_balances
+
+
+# ---------------------------------------------------------------------------
+# core.py — non-string date/memo rejected with clear LedgerError
+# ---------------------------------------------------------------------------
+
+class TestNonStringFields:
+    def test_integer_date_rejected(self):
+        data = json.dumps([
+            {"id": "t1", "date": 20260101, "lines": [
+                {"account": "a", "debit": "5", "credit": "0"},
+                {"account": "b", "debit": "0", "credit": "5"},
+            ]}
+        ])
+        with pytest.raises(LedgerError, match="date"):
+            load_entries(data)
+
+    def test_list_memo_rejected(self):
+        data = json.dumps([
+            {"id": "t1", "memo": ["not", "a", "string"], "lines": [
+                {"account": "a", "debit": "5", "credit": "0"},
+                {"account": "b", "debit": "0", "credit": "5"},
+            ]}
+        ])
+        with pytest.raises(LedgerError, match="memo"):
+            load_entries(data)
+
+    def test_string_date_and_memo_accepted(self):
+        """String values for date and memo must still work as before."""
+        data = json.dumps([
+            {"id": "t1", "date": "2026-01-01", "memo": "ok", "lines": [
+                {"account": "a", "debit": "5", "credit": "0"},
+                {"account": "b", "debit": "0", "credit": "5"},
+            ]}
+        ])
+        entries = load_entries(data)
+        assert entries[0].date == "2026-01-01"
+        assert entries[0].memo == "ok"

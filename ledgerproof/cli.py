@@ -64,7 +64,7 @@ def _render_table(result, path: str) -> str:
 def _cmd_verify(args) -> int:
     try:
         entries = load_entries(_read(args.ledger))
-    except (LedgerError, OSError) as exc:
+    except (LedgerError, OSError, UnicodeDecodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     result = verify_ledger(entries)
@@ -82,7 +82,7 @@ def _cmd_verify(args) -> int:
 def _cmd_seal(args) -> int:
     try:
         entries = load_entries(_read(args.ledger))
-    except (LedgerError, OSError) as exc:
+    except (LedgerError, OSError, UnicodeDecodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     chain_entries(entries)
@@ -93,7 +93,10 @@ def _cmd_seal(args) -> int:
             with open(args.output, "w", encoding="utf-8") as fh:
                 fh.write(text + "\n")
         except OSError as exc:
-            print(f"error: cannot write output file {args.output!r}: {exc}", file=sys.stderr)
+            print(
+                f"error: cannot write output file {args.output!r}: {exc}",
+                file=sys.stderr,
+            )
             return 2
         if args.format == "json":
             print(json.dumps({
