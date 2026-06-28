@@ -1,0 +1,23 @@
+$ ledgerproof-emit --help
+
+usage: ledgerproof [-h] [--version] [--format {table,json}] {verify,seal} ...
+
+Verify double-entry ledger integrity: prove debits == credits per transaction and detect retroactive edits via a hash chain.
+
+positional arguments:
+  {verify,seal}
+    verify              verify balance invariants + hash chain (exit 1 on
+                        findings)
+    seal                compute the hash chain for a draft ledger and write it
+                        out
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+                        output format (default: table)
+
+examples:
+  python -m ledgerproof verify ledger.json
+  python -m ledgerproof verify ledger.json --format json | jq .
+  python -m ledgerproof seal draft.json -o sealed.json

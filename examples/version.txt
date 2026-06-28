@@ -1,0 +1,3 @@
+$ ledgerproof-emit --version
+
+ledgerproof 0.1.0

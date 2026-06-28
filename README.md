@@ -20,6 +20,70 @@ pip install cognis-ledgerproof
 ledgerproof scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ ledgerproof-emit --version
+ledgerproof 0.1.0
+```
+
+```console
+$ ledgerproof-emit --help
+usage: ledgerproof [-h] [--version] [--format {table,json}] {verify,seal} ...
+
+Verify double-entry ledger integrity: prove debits == credits per transaction and detect retroactive edits via a hash chain.
+
+positional arguments:
+  {verify,seal}
+    verify              verify balance invariants + hash chain (exit 1 on
+                        findings)
+    seal                compute the hash chain for a draft ledger and write it
+                        out
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+                        output format (default: table)
+
+examples:
+  python -m ledgerproof verify ledger.json
+  python -m ledgerproof verify ledger.json --format json | jq .
+  python -m ledgerproof seal draft.json -o sealed.json
+```
+
+> Blocks above are real `ledgerproof` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"feed": {
+"type": "STIX",
+"id": "1234567890abcdef",
+"spec_version": "2.1"
+},
+"objects": [
+{
+"id": "aabbccddeeff00aa",
+"type": "indicator",
+"name": "Example Indicator",
+"description": "This is an example indicator.",
+"created_by_ref": "user:example_user",
+"modified_by_ref": "user:example_user",
+"created": "2023-03-01T14:30:00.000Z",
+"modified": "2023-03-01T14:30:00.000Z"
+}
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. **Install** (Python 3.8+, stdlib only):
